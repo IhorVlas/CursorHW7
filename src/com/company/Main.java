@@ -11,8 +11,6 @@ import static java.time.temporal.ChronoField.DAY_OF_MONTH;
 public class Main {
 
 
-
-
     public static void main(String[] args) {
 //        Вы посетитель библиотеки.
 //        Каждый раз, когда вы берете книгу, она также должна быть добавлена в библиотечный отчет.
@@ -30,78 +28,67 @@ public class Main {
 //        Ф.э. 01.01.2020 - 2
 //        01.02.2020 - 0
 
+        LocalDate localDate;
+        LocalDate dateMin = LocalDate.of(9999, 12, 31);
+        LocalDate dateMax = LocalDate.of(0000, 01, 01);
 
         Map<LocalDate, String> map = new HashMap<>();
 
         LocalDate date = LocalDate.of(2022, 1, 1);
         LocalDate date1 = LocalDate.of(2022, 1, 1);
         LocalDate date2 = LocalDate.of(2022, 1, 4);
-        LocalDate date3 = LocalDate.of(2022, 1, 6);
+        LocalDate date3 = LocalDate.of(2022, 2, 6);
+        LocalDate date4 = LocalDate.of(2022, 1, 12);
+        LocalDate date5 = LocalDate.of(2022, 1, 16);
+        LocalDate date6 = LocalDate.of(2022, 2, 23);
+        LocalDate date7 = LocalDate.of(2022, 1, 27);
 
         map.put(date1, "Telephones");
-        map.put(date2, "Learn");
-        map.put(date3, "Car");
-
-        //  System.out.println(map);
+        map.put(date2, "Red Comet");
+        map.put(date3, "When We Cease to Understand the World");
+        map.put(date4, "No One Is Talking About This");
+        map.put(date5, "The Love Songs");
+        map.put(date6, "Intimacies");
+        map.put(date7, "Behold the Dreamers");
 
         // проверяет в какие дни брались книги
-        for (int i = 0; i < date.lengthOfMonth(); i++) {
+
+        for (int i = 0; i < date.lengthOfYear(); i++) {
             LocalDate dateD = date.plusDays(i);
             if (map.containsKey(dateD)) {
                 System.out.println(dateD + " : " + map.get(dateD));
+
+                if(dateMax.compareTo(dateD) < 0) {
+                    dateMax = dateD;
+                    //System.out.println("dateMax = " + dateMax);
+                }
+                if(dateMin.compareTo(dateD) > 0){
+                    dateMin = dateD;
+                    //System.out.println("dateMin" + dateMin);
+                }
             }
         }
 
-        System.out.println("Для поиска книг введите дату в формате YYYY-MM-DD");
+        System.out.println("период за который брались книги: " + dateMin + " - " + dateMax);
+        System.out.println("--------------------------------------------------------");
 
+        // тут вставить вывод текста: "для поиска введите  дату" + пример ввода формат дати YYYY-MM-DD
+        // если неправильно введено то эксепшн и введите еще раз
 
+        System.out.println("Для поиска книг введите дату в формате YYYY-MM-DD: ");
+        Scanner sc = new Scanner(System.in);
 
-            Scanner sc = new Scanner(System.in);
-          LocalDate localDate;
-
-
-        while(true){
-            System.out.print("Enter a date in the format of YYYY-MM-DD:");
+        while (true) {
+            // System.out.print("Enter a date in the format of YYYY-MM-DD:");
             String dateScanner = sc.next();
             try {
                 localDate = LocalDate.parse(dateScanner);
                 break;
             } catch (Exception e) {
-                System.err.println("ERROR: Please input the date in the correct format");
+                System.err.println("Не верный ввод, формат ввода даты -> YYYY-MM-DD: ");
             }
         }
-
-       // System.out.println("The day of week is " + localDate.getDayOfWeek().name());
         System.out.println(localDate);
-
-
-
-
-
-
-        //  LocalDate localDate = null;
-
-
-//       if(year.matches("[0-9]{4}")){
-//           System.out.println("asd");
-//       } else{
-//           System.out.println("давай еще раз");
-//           year = sc.next();}
-
-//        month = sc.nextInt();
-//        day = sc.nextInt();
-
-//        try{
-//            getLocalDate(year,month,day);
-//        }catch (){}
-
-
-//        while (!localDate.isSupported(DAY_OF_MONTH))  {
-//            System.out.println("NOOOOO");
-
-        // тут вставить вывод текста: "для поиска введите  дату" + пример ввода формат дати YYYY-MM-DD
-        // если неправильно введено то эксепшн и введите еще раз
-
 
         if (map.containsKey(localDate)) {
             System.out.println("В этот день брали: " + map.get(localDate));
@@ -109,75 +96,19 @@ public class Main {
             System.out.println("В этот день книги не выдавались");
         }
 
+        System.out.println("вывод ");
+
+      //  Optional<Map.Entry<Item, Boolean>> firstEntry =  processedItem.entrySet().stream().findFirst();
+        for(Map.Entry<LocalDate, String> firstEntry : map.entrySet()){
+            System.out.println(firstEntry.getKey());
+        }
     }
 }
 
-        // System.out.println(map);
-
-//        map.put(20-10-19, "var");
-//        map.put(22-10-19, "data");
-//        map.put(23-10-19, "Learning");
-//
-//        System.out.println(map.get(22-10-19));
-//
-//        for (Map.Entry<Integer, String> integerStringEntry : map.entrySet()) {
-//            System.out.println(integerStringEntry);
-//
-//        }
 
 
-//    private static LocalDate getLocalDate() throws DateTimeParseException { //
-//        Scanner sc = new Scanner(System.in);
-//        LocalDate localDate = LocalDate.parse(sc.next());
-//        // return localDate;
-////        if (localDate.isSupported(DAY_OF_MONTH)) {
-////            System.out.println("ok");
-////            return localDate;
-////        }
-////        else {
-////            throw new DateTimeParseException();
-////        }
-//        return localDate;
-    //}
 
 
-//    private static boolean getLocalDate(String year, String month, String day) { // throws DateTimeParseException
-//        int rangeYear = Integer.parseInt("[0-9]{4}");
-//        int rangeMonthDay = Integer.parseInt("[0-9]{2}");
-//        if(year.matches(String.valueOf(rangeYear))){
 
 
-//  && (month.matches(String.valueOf(rangeMonthDay))) && (day.matches(String.valueOf(rangeMonthDay)))){
 
-
-//            return true;
-//        }
-//        return true;
-//    }
-
-
-//   LocalDate localDate = LocalDate.parse(sc.next());
-
-
-//    Scanner sc = new Scanner(System.in);
-//    String year = sc.next();
-//
-//        while (!year.matches("[0-9]{4}")) {
-//                System.out.println("повтори попытку");
-//                year = sc.next();
-//                }
-//
-//                System.out.println("cool");
-//                System.out.println(year);
-//
-//                String month = sc.next();
-//
-//                while (!month.matches("[0-9]{2}")) {
-//                System.out.println("повтори попытку");
-//                month = sc.next();
-//                }
-//
-//                System.out.println("cool");
-//                System.out.println(month);
-
-//           localDate.of(year,month,day);
