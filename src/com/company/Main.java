@@ -1,15 +1,11 @@
 package com.company;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static java.time.temporal.ChronoField.DAY_OF_MONTH;
-
 public class Main {
-
 
     public static void main(String[] args) {
 //        Вы посетитель библиотеки.
@@ -51,20 +47,16 @@ public class Main {
         map.put(date6, "Intimacies");
         map.put(date7, "Behold the Dreamers");
 
-        // проверяет в какие дни брались книги
-
-        for (int i = 0; i < date.lengthOfYear(); i++) {
+        for (int i = 0; i < date.lengthOfYear(); i++) {   // for(Map.Entry<LocalDate, String> mapEntry : map.entrySet()){}
             LocalDate dateD = date.plusDays(i);
             if (map.containsKey(dateD)) {
                 System.out.println(dateD + " : " + map.get(dateD));
 
-                if(dateMax.compareTo(dateD) < 0) {
+                if (dateMax.compareTo(dateD) < 0) {
                     dateMax = dateD;
-                    //System.out.println("dateMax = " + dateMax);
                 }
-                if(dateMin.compareTo(dateD) > 0){
+                if (dateMin.compareTo(dateD) > 0) {
                     dateMin = dateD;
-                    //System.out.println("dateMin" + dateMin);
                 }
             }
         }
@@ -72,14 +64,10 @@ public class Main {
         System.out.println("период за который брались книги: " + dateMin + " - " + dateMax);
         System.out.println("--------------------------------------------------------");
 
-        // тут вставить вывод текста: "для поиска введите  дату" + пример ввода формат дати YYYY-MM-DD
-        // если неправильно введено то эксепшн и введите еще раз
-
         System.out.println("Для поиска книг введите дату в формате YYYY-MM-DD: ");
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            // System.out.print("Enter a date in the format of YYYY-MM-DD:");
             String dateScanner = sc.next();
             try {
                 localDate = LocalDate.parse(dateScanner);
@@ -88,19 +76,18 @@ public class Main {
                 System.err.println("Не верный ввод, формат ввода даты -> YYYY-MM-DD: ");
             }
         }
-        System.out.println(localDate);
+        System.out.println("Вы ввели: " + localDate);
 
         if (map.containsKey(localDate)) {
             System.out.println("В этот день брали: " + map.get(localDate));
         } else {
             System.out.println("В этот день книги не выдавались");
         }
+        System.out.println("--------------------------------------------------------");
+        System.out.println("Список книг которые брали:");
 
-        System.out.println("вывод ");
-
-      //  Optional<Map.Entry<Item, Boolean>> firstEntry =  processedItem.entrySet().stream().findFirst();
-        for(Map.Entry<LocalDate, String> firstEntry : map.entrySet()){
-            System.out.println(firstEntry.getKey());
+        for (Map.Entry<LocalDate, String> mapEntry : map.entrySet()) {
+            System.out.println("* " + mapEntry.getValue());
         }
     }
 }
